@@ -2,9 +2,21 @@ import { motion } from "framer-motion";
 import { SectionHeader } from "./SectionHeader";
 
 const TIMELINE = [
-  { year: "2024", title: "Started Development Journey", desc: "First lines of code. First builds. The foundation." },
-  { year: "2025", title: "Entered AI/ML Space", desc: "Embeddings, models, pipelines — moved from apps to intelligent systems." },
-  { year: "2026", title: "Building Advanced Systems", desc: "Shipping startup-grade products. Compounding the craft." },
+  {
+    year: "2022",
+    title: "Started Learning Development",
+    desc: "First lines of code. Foundations of HTML, CSS & JavaScript laid the groundwork.",
+  },
+  {
+    year: "2024",
+    title: "Building Projects",
+    desc: "Shipping real builds — full-stack experiments, interfaces, and product prototypes.",
+  },
+  {
+    year: "2026",
+    title: "Started Learning AI/ML",
+    desc: "Embeddings, models, pipelines — moving from apps to intelligent systems.",
+  },
 ];
 
 export function Evolution() {
@@ -33,7 +45,10 @@ export function Evolution() {
                   i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
                 }`}
               >
-                <div className="absolute left-3 h-3 w-3 -translate-x-1/2 rounded-full bg-crimson md:left-1/2" style={{ boxShadow: "0 0 16px var(--crimson-glow)" }} />
+                <div
+                  className="absolute left-3 h-3 w-3 -translate-x-1/2 rounded-full bg-crimson md:left-1/2"
+                  style={{ boxShadow: "0 0 16px var(--crimson-glow)" }}
+                />
                 <div className="hidden md:block md:flex-1" />
                 <div className="ml-10 flex-1 md:ml-0">
                   <div className="glass rounded-xl p-6 transition-colors hover:border-crimson/50">

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { LogoMark } from "./Logo";
 
 const STEPS = [
   "INITIALIZING SYSTEM...",
@@ -46,10 +47,11 @@ export function LoadingScreen({ onDone }: { onDone: () => void }) {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="relative mb-12 text-center"
+            className="relative mb-8 flex flex-col items-center text-center"
           >
+            <LogoMark size={88} />
             <div
-              className="font-display text-5xl font-black tracking-[0.3em] text-foreground md:text-7xl"
+              className="mt-5 font-display text-5xl font-black tracking-[0.3em] text-foreground md:text-7xl"
               style={{ animation: "glitch 2.5s infinite" }}
             >
               S.S.S.Y

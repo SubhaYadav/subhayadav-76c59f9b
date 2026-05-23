@@ -1,12 +1,18 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { SectionHeader } from "./SectionHeader";
+import { LINKS } from "@/lib/links";
 
 const SOCIALS = [
-  { label: "EMAIL", href: "mailto:contact@sssy.dev", glyph: "@" },
-  { label: "GITHUB", href: "https://github.com", glyph: "{ }" },
-  { label: "LINKEDIN", href: "https://linkedin.com", glyph: "in" },
-  { label: "INSTAGRAM", href: "https://instagram.com", glyph: "◎" },
+  { label: "EMAIL", href: LINKS.emailHref, glyph: "@", sub: LINKS.email },
+  { label: "GITHUB", href: LINKS.github, glyph: "{ }", sub: LINKS.githubUser },
+  {
+    label: "LINKEDIN",
+    href: LINKS.linkedin,
+    glyph: "in",
+    sub: "subha-saubhagya-singh-yadav",
+  },
+  { label: "INSTAGRAM", href: LINKS.instagram, glyph: "◎", sub: "@saugat__yadav" },
 ];
 
 export function Contact() {
@@ -36,8 +42,13 @@ export function Contact() {
                   <span className="grid h-10 w-10 place-items-center rounded-md border border-crimson/30 bg-background/40 font-display text-xs font-bold text-crimson transition-all group-hover:border-crimson group-hover:text-glow">
                     {s.glyph}
                   </span>
-                  <span className="font-display text-xs tracking-[0.3em] text-foreground">
-                    {s.label}
+                  <span className="flex min-w-0 flex-col">
+                    <span className="font-display text-xs tracking-[0.3em] text-foreground">
+                      {s.label}
+                    </span>
+                    <span className="truncate text-[0.7rem] text-muted-foreground">
+                      {s.sub}
+                    </span>
                   </span>
                   <span className="ml-auto font-display text-xs text-muted-foreground transition-transform group-hover:translate-x-1">
                     →
