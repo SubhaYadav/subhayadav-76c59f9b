@@ -1,0 +1,17 @@
+/* Pure CSS enhancements that ride alongside Tailwind. */
+.sssy-spark {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, #ff8a92 0%, #dc3c46 50%, transparent 70%);
+  pointer-events: none;
+  z-index: 9999;
+  animation: sssy-spark 0.7s ease-out forwards;
+}
+@keyframes sssy-spark {
+  0%   { transform: scale(0.4); opacity: 1; box-shadow: 0 0 0 0 rgba(220,60,70,0.7); }
+  100% { transform: scale(4);   opacity: 0; box-shadow: 0 0 0 24px rgba(220,60,70,0); }
+}
+.glass, .glass-strong { transition: transform 220ms ease, box-shadow 220ms ease; will-change: transform; }

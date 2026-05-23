@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { SectionHeader } from "./SectionHeader";
+import { LINKS } from "@/lib/links";
 
 type Line = { kind: "in" | "out"; text: string };
 
@@ -10,6 +11,8 @@ const HELP = [
   "  skills     — display arsenal",
   "  resume     — download resume",
   "  contact    — get in touch",
+  "  social     — list social links",
+  "  unlock     — ??? ",
   "  clear      — clear terminal",
   "  whoami     — identify the operator",
 ];
@@ -32,13 +35,20 @@ const RESPONSES: Record<string, string[]> = {
   resume: ["> Initiating download: resume.pdf"],
   contact: [
     "> Channels open:",
-    "  email     contact@sssy.dev",
-    "  github    github.com/sssy",
-    "  linkedin  linkedin.com/in/sssy",
+    `  email     ${LINKS.email}`,
+    `  github    ${LINKS.githubUser}`,
+    `  linkedin  subha-saubhagya-singh-yadav`,
+    `  instagram @saugat__yadav`,
+  ],
+  social: [
+    `  github    ${LINKS.github}`,
+    `  linkedin  ${LINKS.linkedin}`,
+    `  instagram ${LINKS.instagram}`,
+    `  email     ${LINKS.email}`,
   ],
   whoami: [
     "> Subha Saubhagya Singh Yadav",
-    "  Role: AI/ML Engineer · Full-stack Developer",
+    "  Role: BCA Student · AI/ML · Full-stack Developer",
     "  Mode: Executing.",
   ],
 };
@@ -71,6 +81,14 @@ export function Terminal() {
       a.download = "resume.pdf";
       a.click();
     }
+    if (cmd === "unlock") {
+      window.dispatchEvent(new CustomEvent("sssy:unlock"));
+      setLines([
+        ...next,
+        { kind: "out", text: "> ✦ secret mode engaged. system pulse altered." },
+      ]);
+      return;
+    }
     const out = RESPONSES[cmd] ?? [`command not found: ${cmd}. type 'help'.`];
     setLines([...next, ...out.map((t) => ({ kind: "out" as const, text: t }))]);
   };
@@ -81,7 +99,7 @@ export function Terminal() {
         <SectionHeader
           index="06"
           title="TERMINAL"
-          subtitle="Speak the language of the machine."
+          subtitle="Speak the language of the machine. (Try `unlock`.)"
         />
         <div
           onClick={() => inputRef.current?.focus()}

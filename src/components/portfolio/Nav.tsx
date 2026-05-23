@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
+import { LogoMark } from "./Logo";
 
 const LINKS = [
+  { label: "WHO AM I", href: "#whoami" },
   { label: "MISSION", href: "#mission" },
   { label: "ARSENAL", href: "#arsenal" },
   { label: "CREATIONS", href: "#creations" },
@@ -10,6 +12,10 @@ const LINKS = [
 ];
 
 export function Nav() {
+  const handleLogoClick = () => {
+    window.dispatchEvent(new CustomEvent("sssy:logo-click"));
+  };
+
   return (
     <motion.nav
       initial={{ y: -30, opacity: 0 }}
@@ -20,9 +26,13 @@ export function Nav() {
       <div className="glass-strong flex items-center gap-1 rounded-full px-2 py-2 md:gap-2">
         <a
           href="#top"
-          className="ml-2 mr-1 font-display text-xs font-bold tracking-[0.3em] text-crimson text-glow-soft md:text-sm"
+          onClick={handleLogoClick}
+          className="ml-1 mr-1 flex items-center gap-2"
         >
-          S.S.S.Y
+          <LogoMark size={28} />
+          <span className="font-display text-xs font-bold tracking-[0.3em] text-crimson text-glow-soft md:text-sm">
+            S.S.S.Y
+          </span>
         </a>
         <div className="mx-1 hidden h-4 w-px bg-border md:block" />
         <div className="hidden items-center gap-1 md:flex">
