@@ -6,6 +6,7 @@ import { SmoothScroll } from "@/components/portfolio/SmoothScroll";
 import { Nav } from "@/components/portfolio/Nav";
 import { Hero } from "@/components/portfolio/Hero";
 import { Mission } from "@/components/portfolio/Mission";
+import { WhoAmI } from "@/components/portfolio/WhoAmI";
 import { Arsenal } from "@/components/portfolio/Arsenal";
 import { Creations } from "@/components/portfolio/Creations";
 import { ProofOfWork } from "@/components/portfolio/ProofOfWork";
@@ -14,6 +15,7 @@ import { Stats } from "@/components/portfolio/Stats";
 import { Terminal } from "@/components/portfolio/Terminal";
 import { Principles } from "@/components/portfolio/Principles";
 import { Contact } from "@/components/portfolio/Contact";
+import { Guestbook } from "@/components/portfolio/Guestbook";
 import { Footer } from "@/components/portfolio/Footer";
 import { EasterEgg } from "@/components/portfolio/EasterEgg";
 
@@ -38,6 +40,7 @@ function Index() {
             <div className="pointer-events-none fixed inset-0 -z-10 grid-bg opacity-[0.04]" />
             <div className="pointer-events-none fixed inset-0 -z-10 bg-gradient-to-b from-background via-background to-background" />
             <Hero />
+            <WhoAmI />
             <Mission />
             <Arsenal />
             <Creations />
@@ -47,6 +50,7 @@ function Index() {
             <Terminal />
             <Principles />
             <Contact />
+            <Guestbook />
             <Footer />
           </main>
         </>
