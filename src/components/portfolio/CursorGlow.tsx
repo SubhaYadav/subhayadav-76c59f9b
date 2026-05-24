@@ -50,12 +50,12 @@ export function CursorGlow() {
     <>
       <div
         ref={dotRef}
-        className="pointer-events-none fixed left-0 top-0 z-[100] h-2 w-2 rounded-full bg-crimson-glow mix-blend-screen"
+        className="pointer-events-none fixed left-0 top-0 z-[9999] h-2 w-2 rounded-full bg-crimson-glow mix-blend-screen"
         style={{ boxShadow: "0 0 12px var(--crimson-glow)" }}
       />
       <div
         ref={ringRef}
-        className="pointer-events-none fixed left-0 top-0 z-[100] h-10 w-10 rounded-full border border-crimson/50 mix-blend-screen"
+        className="pointer-events-none fixed left-0 top-0 z-[9999] h-10 w-10 rounded-full border border-crimson/50 mix-blend-screen"
         style={{ boxShadow: "0 0 30px oklch(0.58 0.24 25 / 0.3)" }}
       />
     </>
