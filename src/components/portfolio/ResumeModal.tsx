@@ -41,14 +41,28 @@ export function ResumeModal() {
                 // RESUME · S.S.S.Y
               </div>
               <div className="flex items-center gap-2">
-                <a
-                  href={LINKS.resumeImage}
-                  download="Subha-Saubhagya-Singh-Yadav-Resume.png"
+                <button
+                  onClick={async () => {
+                    try {
+                      const res = await fetch(LINKS.resumeImage);
+                      const blob = await res.blob();
+                      const url = URL.createObjectURL(blob);
+                      const a = document.createElement("a");
+                      a.href = url;
+                      a.download = "Subha-Saubhagya-Singh-Yadav-Resume.png";
+                      document.body.appendChild(a);
+                      a.click();
+                      a.remove();
+                      setTimeout(() => URL.revokeObjectURL(url), 1000);
+                    } catch {
+                      window.open(LINKS.resumeImage, "_blank");
+                    }
+                  }}
                   className="rounded-full bg-crimson px-4 py-1.5 font-display text-[0.6rem] font-semibold tracking-[0.25em] text-primary-foreground transition-all hover:bg-crimson-glow"
                   style={{ boxShadow: "0 0 20px oklch(0.58 0.24 25 / 0.5)" }}
                 >
                   ↓ DOWNLOAD
-                </a>
+                </button>
                 <button
                   onClick={() => setOpen(false)}
                   aria-label="Close"
