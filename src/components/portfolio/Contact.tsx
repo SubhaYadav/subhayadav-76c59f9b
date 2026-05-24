@@ -4,19 +4,20 @@ import { SectionHeader } from "./SectionHeader";
 import { LINKS } from "@/lib/links";
 
 const SOCIALS = [
-  { label: "EMAIL", href: LINKS.emailHref, glyph: "@", sub: LINKS.email },
-  { label: "GITHUB", href: LINKS.github, glyph: "{ }", sub: LINKS.githubUser },
+  { label: "EMAIL", href: LINKS.emailHref, glyph: "@", sub: LINKS.email, external: false },
+  { label: "GITHUB", href: LINKS.github, glyph: "{ }", sub: LINKS.githubUser, external: true },
   {
     label: "LINKEDIN",
     href: LINKS.linkedin,
     glyph: "in",
     sub: "subha-saubhagya-singh-yadav",
+    external: true,
   },
-  { label: "INSTAGRAM", href: LINKS.instagram, glyph: "◎", sub: "@saugat__yadav" },
+  { label: "INSTAGRAM", href: LINKS.instagram, glyph: "◎", sub: "@saugat__yadav", external: true },
 ];
 
 export function Contact() {
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "ok" | "err">("idle");
   return (
     <section id="contact" className="relative px-6 py-32 md:py-40">
       <div className="mx-auto max-w-6xl">
