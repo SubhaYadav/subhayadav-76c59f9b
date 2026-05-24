@@ -32,8 +32,7 @@ export function Contact() {
                 <motion.a
                   key={s.label}
                   href={s.href}
-                  target="_blank"
-                  rel="noreferrer"
+                  {...(s.external ? { target: "_blank", rel: "noreferrer" } : {})}
                   initial={{ opacity: 0, x: -10 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
@@ -60,11 +59,33 @@ export function Contact() {
           </div>
 
           <form
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
-              setSent(true);
-              (e.target as HTMLFormElement).reset();
-              setTimeout(() => setSent(false), 3500);
+              const form = e.target as HTMLFormElement;
+              const fd = new FormData(form);
+              setStatus("sending");
+              try {
+                const res = await fetch(LINKS.formEndpoint, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                  },
+                  body: JSON.stringify({
+                    _subject: `📡 Portfolio Contact — ${fd.get("name")}`,
+                    source: "Portfolio Contact Form",
+                    name: fd.get("name"),
+                    email: fd.get("email"),
+                    message: fd.get("message"),
+                  }),
+                });
+                if (!res.ok) throw new Error();
+                form.reset();
+                setStatus("ok");
+              } catch {
+                setStatus("err");
+              }
+              setTimeout(() => setStatus("idle"), 3500);
             }}
             className="glass-strong space-y-4 rounded-2xl p-6 md:col-span-3 md:p-8"
           >
@@ -73,6 +94,7 @@ export function Contact() {
                 NAME
               </label>
               <input
+                name="name"
                 required
                 className="w-full rounded-md border border-border bg-background/40 px-4 py-3 text-foreground outline-none transition-colors focus:border-crimson"
                 placeholder="Your name"
@@ -83,6 +105,7 @@ export function Contact() {
                 EMAIL
               </label>
               <input
+                name="email"
                 type="email"
                 required
                 className="w-full rounded-md border border-border bg-background/40 px-4 py-3 text-foreground outline-none transition-colors focus:border-crimson"
@@ -94,6 +117,7 @@ export function Contact() {
                 MESSAGE
               </label>
               <textarea
+                name="message"
                 required
                 rows={5}
                 className="w-full resize-none rounded-md border border-border bg-background/40 px-4 py-3 text-foreground outline-none transition-colors focus:border-crimson"
@@ -102,10 +126,17 @@ export function Contact() {
             </div>
             <button
               type="submit"
-              className="w-full rounded-full bg-crimson py-3 font-display text-xs font-semibold tracking-[0.3em] text-primary-foreground transition-all hover:bg-crimson-glow"
+              disabled={status === "sending"}
+              className="w-full rounded-full bg-crimson py-3 font-display text-xs font-semibold tracking-[0.3em] text-primary-foreground transition-all hover:bg-crimson-glow disabled:opacity-60"
               style={{ boxShadow: "0 0 30px oklch(0.58 0.24 25 / 0.5)" }}
             >
-              {sent ? "✓ TRANSMISSION SENT" : "TRANSMIT MESSAGE"}
+              {status === "sending"
+                ? "TRANSMITTING..."
+                : status === "ok"
+                  ? "✓ DELIVERED TO INBOX"
+                  : status === "err"
+                    ? "✕ FAILED — TRY AGAIN"
+                    : "TRANSMIT MESSAGE"}
             </button>
           </form>
         </div>
