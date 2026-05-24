@@ -1,29 +1,39 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SectionHeader } from "./SectionHeader";
+import { LINKS } from "@/lib/links";
 
 type Msg = { name: string; text: string; at: number };
 
-const VISITOR_KEY = "sssy_visitor_count";
-const MSG_KEY = "sssy_guestbook";
+const MSG_KEY = "sssy_guestbook_v2";
+const VISITOR_NS = "sssy-portfolio";
+const VISITOR_KEY = "visits-v1";
 
 export function Guestbook() {
-  const [count, setCount] = useState<number>(0);
+  const [count, setCount] = useState<number | null>(null);
   const [msgs, setMsgs] = useState<Msg[]>([]);
   const [name, setName] = useState("");
   const [text, setText] = useState("");
-  const [glow, setGlow] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "ok" | "err">(
+    "idle",
+  );
 
   useEffect(() => {
-    // visitor counter — local seed for premium feel, persists per browser
-    const stored = parseInt(localStorage.getItem(VISITOR_KEY) || "0", 10);
-    let next = stored;
-    if (!sessionStorage.getItem("sssy_counted")) {
-      next = (stored || 1247 + Math.floor(Math.random() * 30)) + 1;
-      localStorage.setItem(VISITOR_KEY, String(next));
-      sessionStorage.setItem("sssy_counted", "1");
-    }
-    setCount(next);
+    // Clean up old localStorage keys (old fake messages + old counter)
+    localStorage.removeItem("sssy_guestbook");
+    localStorage.removeItem("sssy_visitor_count");
+
+    // Real visitor counter via free Abacus API (no signup, public)
+    const url = sessionStorage.getItem("sssy_counted")
+      ? `https://abacus.jasoncameron.dev/get/${VISITOR_NS}/${VISITOR_KEY}`
+      : `https://abacus.jasoncameron.dev/hit/${VISITOR_NS}/${VISITOR_KEY}`;
+    fetch(url)
+      .then((r) => r.json())
+      .then((j) => {
+        if (typeof j?.value === "number") setCount(j.value);
+        sessionStorage.setItem("sssy_counted", "1");
+      })
+      .catch(() => setCount(null));
 
     try {
       const raw = localStorage.getItem(MSG_KEY);
@@ -31,16 +41,36 @@ export function Guestbook() {
     } catch {}
   }, []);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !text.trim()) return;
-    const next = [{ name: name.trim(), text: text.trim(), at: Date.now() }, ...msgs].slice(0, 30);
-    setMsgs(next);
-    localStorage.setItem(MSG_KEY, JSON.stringify(next));
-    setName("");
-    setText("");
-    setGlow(true);
-    setTimeout(() => setGlow(false), 1200);
+    setStatus("sending");
+    try {
+      const res = await fetch(LINKS.formEndpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          _subject: `🛰️ New Visitor Signal from ${name.trim()}`,
+          source: "Portfolio Guestbook",
+          name: name.trim(),
+          message: text.trim(),
+        }),
+      });
+      if (!res.ok) throw new Error("send failed");
+      const next = [
+        { name: name.trim(), text: text.trim(), at: Date.now() },
+        ...msgs,
+      ].slice(0, 30);
+      setMsgs(next);
+      localStorage.setItem(MSG_KEY, JSON.stringify(next));
+      setName("");
+      setText("");
+      setStatus("ok");
+      setTimeout(() => setStatus("idle"), 2200);
+    } catch {
+      setStatus("err");
+      setTimeout(() => setStatus("idle"), 2500);
+    }
   };
 
   return (
@@ -49,7 +79,7 @@ export function Guestbook() {
         <SectionHeader
           index="09"
           title="VISITOR LOG"
-          subtitle="Leave a signal. Visitors from around the world have explored this portfolio."
+          subtitle="Leave a signal. Every message lands in my inbox."
         />
 
         <div className="grid gap-6 md:grid-cols-5 md:gap-10">
@@ -65,10 +95,12 @@ export function Guestbook() {
                 // VISITOR COUNTER
               </div>
               <div className="mt-3 font-display text-5xl font-black text-foreground text-glow md:text-6xl">
-                {count.toLocaleString().padStart(5, "0")}
+                {count === null
+                  ? "·····"
+                  : count.toLocaleString().padStart(5, "0")}
               </div>
               <div className="mt-1 text-xs text-muted-foreground">
-                signals received
+                real signals received
               </div>
               <div className="my-5 h-px w-full bg-gradient-to-r from-crimson via-crimson/30 to-transparent" />
               <form onSubmit={submit} className="space-y-3">
@@ -82,21 +114,29 @@ export function Guestbook() {
                 <textarea
                   value={text}
                   onChange={(e) => setText(e.target.value)}
-                  maxLength={200}
+                  maxLength={300}
                   rows={3}
                   placeholder="Leave a message..."
                   className="w-full resize-none rounded-md border border-border bg-background/40 px-3 py-2 text-sm outline-none transition-colors focus:border-crimson"
                 />
                 <button
                   type="submit"
-                  className="w-full rounded-full bg-crimson py-2.5 font-display text-[0.65rem] font-semibold tracking-[0.3em] text-primary-foreground transition-all hover:bg-crimson-glow"
+                  disabled={status === "sending"}
+                  className="w-full rounded-full bg-crimson py-2.5 font-display text-[0.65rem] font-semibold tracking-[0.3em] text-primary-foreground transition-all hover:bg-crimson-glow disabled:opacity-60"
                   style={{
-                    boxShadow: glow
-                      ? "0 0 40px oklch(0.7 0.28 25 / 0.9)"
-                      : "0 0 20px oklch(0.58 0.24 25 / 0.4)",
+                    boxShadow:
+                      status === "ok"
+                        ? "0 0 40px oklch(0.7 0.28 25 / 0.9)"
+                        : "0 0 20px oklch(0.58 0.24 25 / 0.4)",
                   }}
                 >
-                  {glow ? "✓ SIGNAL TRANSMITTED" : "LEAVE A SIGNAL"}
+                  {status === "sending"
+                    ? "TRANSMITTING..."
+                    : status === "ok"
+                      ? "✓ DELIVERED TO INBOX"
+                      : status === "err"
+                        ? "✕ TRY AGAIN"
+                        : "LEAVE A SIGNAL"}
                 </button>
               </form>
             </motion.div>
