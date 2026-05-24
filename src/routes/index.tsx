@@ -18,6 +18,7 @@ import { Contact } from "@/components/portfolio/Contact";
 import { Guestbook } from "@/components/portfolio/Guestbook";
 import { Footer } from "@/components/portfolio/Footer";
 import { EasterEgg } from "@/components/portfolio/EasterEgg";
+import { ResumeModal } from "@/components/portfolio/ResumeModal";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -34,6 +35,7 @@ function Index() {
           <SmoothScroll />
           <CursorGlow />
           <EasterEgg />
+          <ResumeModal />
           <Nav />
           <main className="relative">
             {/* ambient background grid */}

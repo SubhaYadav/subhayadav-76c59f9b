@@ -47,13 +47,17 @@ export function Nav() {
           ))}
         </div>
         <a
-          href="/resume.pdf"
-          download
+          href="#resume"
+          onClick={(e) => {
+            e.preventDefault();
+            window.dispatchEvent(new CustomEvent("sssy:open-resume"));
+          }}
           className="ml-1 rounded-full bg-crimson px-4 py-1.5 font-display text-[0.65rem] font-semibold tracking-[0.25em] text-primary-foreground transition-all hover:bg-crimson-glow"
           style={{ boxShadow: "0 0 20px oklch(0.58 0.24 25 / 0.5)" }}
         >
           RESUME
         </a>
+
       </div>
     </motion.nav>
   );

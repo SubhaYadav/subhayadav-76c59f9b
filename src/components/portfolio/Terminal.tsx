@@ -13,6 +13,8 @@ const HELP = [
   "  contact    — get in touch",
   "  social     — list social links",
   "  unlock     — ??? ",
+  "  lock       — restore normal mode",
+  "  resume     — view resume",
   "  clear      — clear terminal",
   "  whoami     — identify the operator",
 ];
@@ -81,11 +83,24 @@ export function Terminal() {
       a.download = "resume.pdf";
       a.click();
     }
+    if (cmd === "resume") {
+      window.dispatchEvent(new CustomEvent("sssy:open-resume"));
+      setLines([...next, { kind: "out", text: "> opening resume.png ..." }]);
+      return;
+    }
     if (cmd === "unlock") {
       window.dispatchEvent(new CustomEvent("sssy:unlock"));
       setLines([
         ...next,
         { kind: "out", text: "> ✦ secret mode engaged. system pulse altered." },
+      ]);
+      return;
+    }
+    if (cmd === "lock") {
+      window.dispatchEvent(new CustomEvent("sssy:lock"));
+      setLines([
+        ...next,
+        { kind: "out", text: "> system restored to baseline. crimson stabilized." },
       ]);
       return;
     }

@@ -63,7 +63,7 @@ export function EasterEgg() {
     return () => window.removeEventListener("sssy:logo-click", onClick);
   }, []);
 
-  // terminal "unlock" command
+  // terminal "unlock" / "lock" commands
   useEffect(() => {
     const onUnlock = () => {
       setSecretMode(true);
@@ -72,8 +72,21 @@ export function EasterEgg() {
       document.documentElement.style.setProperty("--crimson-glow", "oklch(0.85 0.22 145)");
       setTimeout(() => setSecretMode(false), 3500);
     };
+    const onLock = () => {
+      // restore original crimson tokens (defined in src/styles.css)
+      document.documentElement.style.removeProperty("--crimson");
+      document.documentElement.style.removeProperty("--crimson-glow");
+      setSecretMode(false);
+      setGlitch(false);
+      setMatrix(false);
+      setBadge(false);
+    };
     window.addEventListener("sssy:unlock", onUnlock);
-    return () => window.removeEventListener("sssy:unlock", onUnlock);
+    window.addEventListener("sssy:lock", onLock);
+    return () => {
+      window.removeEventListener("sssy:unlock", onUnlock);
+      window.removeEventListener("sssy:lock", onLock);
+    };
   }, []);
 
   // matrix canvas
