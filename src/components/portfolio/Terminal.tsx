@@ -78,12 +78,6 @@ export function Terminal() {
       return;
     }
     if (cmd === "resume") {
-      const a = document.createElement("a");
-      a.href = "/resume.pdf";
-      a.download = "resume.pdf";
-      a.click();
-    }
-    if (cmd === "resume") {
       window.dispatchEvent(new CustomEvent("sssy:open-resume"));
       setLines([...next, { kind: "out", text: "> opening resume.png ..." }]);
       return;
