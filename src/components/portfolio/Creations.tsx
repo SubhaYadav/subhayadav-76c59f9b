@@ -88,22 +88,30 @@ function Card({ p, onOpen, i }: { p: Project; onOpen: () => void; i: number }) {
       className="group glass relative overflow-hidden rounded-2xl transition-all hover:border-crimson/60"
     >
       <div className={`relative aspect-[16/9] overflow-hidden bg-gradient-to-br ${p.gradient}`}>
-        <div className="absolute inset-0 grid-bg opacity-40" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="font-display text-6xl font-black tracking-tight text-foreground/5 md:text-8xl">
-            {String(i + 1).padStart(2, "0")}
-          </div>
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+        <img
+          src={p.image}
+          alt={`${p.title} preview`}
+          loading="lazy"
+          width={1280}
+          height={720}
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110"
+        />
+        <div className="pointer-events-none absolute inset-0 grid-bg opacity-20 mix-blend-overlay" />
+        <div
+          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          style={{ boxShadow: "inset 0 0 80px var(--crimson-glow)" }}
+        />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
         <div className="absolute bottom-4 left-5 right-5">
           <div className="font-display text-[0.6rem] tracking-[0.3em] text-crimson">
             PROJECT // {String(i + 1).padStart(2, "0")}
           </div>
-          <h3 className="mt-1 font-display text-2xl font-bold text-foreground md:text-3xl">
+          <h3 className="mt-1 font-display text-2xl font-bold text-foreground text-glow-soft md:text-3xl">
             {p.title}
           </h3>
         </div>
       </div>
+
       <div className="p-6">
         <p className="text-sm text-muted-foreground md:text-base">{p.description}</p>
         <div className="mt-4 flex flex-wrap gap-1.5">
