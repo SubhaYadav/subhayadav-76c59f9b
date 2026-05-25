@@ -48,8 +48,9 @@ export function WhoAmI() {
     if (timerRef.current) window.clearTimeout(timerRef.current);
   };
 
-
+  return (
     <section id="whoami" className="relative px-6 py-32 md:py-40">
+
       <div className="mx-auto max-w-6xl">
         <SectionHeader
           index="00"
