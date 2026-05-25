@@ -199,16 +199,22 @@ export function Creations() {
                 ✕
               </button>
               <div className={`relative aspect-[16/8] overflow-hidden bg-gradient-to-br ${open.gradient}`}>
-                <div className="absolute inset-0 grid-bg opacity-50" />
+                <img
+                  src={open.image}
+                  alt={`${open.title} preview`}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">
                   <div className="font-display text-[0.6rem] tracking-[0.3em] text-crimson">
                     {open.tagline.toUpperCase()}
                   </div>
-                  <h3 className="mt-2 font-display text-4xl font-black text-foreground md:text-5xl">
+                  <h3 className="mt-2 font-display text-4xl font-black text-foreground text-glow md:text-5xl">
                     {open.title}
                   </h3>
                 </div>
               </div>
+
               <div className="space-y-6 p-7 md:p-9">
                 <p className="text-base leading-relaxed text-muted-foreground md:text-lg">
                   {open.longDescription}
