@@ -1,6 +1,8 @@
-import { motion } from "framer-motion";
+import { useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { SectionHeader } from "./SectionHeader";
 import { LogoMark } from "./Logo";
+
 
 const CARDS = [
   {
@@ -36,7 +38,17 @@ const CARDS = [
 ];
 
 export function WhoAmI() {
-  return (
+  const [revealed, setRevealed] = useState(false);
+  const timerRef = useRef<number | null>(null);
+  const startHover = () => {
+    if (timerRef.current) window.clearTimeout(timerRef.current);
+    timerRef.current = window.setTimeout(() => setRevealed(true), 5000);
+  };
+  const endHover = () => {
+    if (timerRef.current) window.clearTimeout(timerRef.current);
+  };
+
+
     <section id="whoami" className="relative px-6 py-32 md:py-40">
       <div className="mx-auto max-w-6xl">
         <SectionHeader
