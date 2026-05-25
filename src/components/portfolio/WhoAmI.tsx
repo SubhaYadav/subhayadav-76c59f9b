@@ -66,7 +66,13 @@ export function WhoAmI() {
             transition={{ duration: 0.9 }}
             className="md:col-span-2"
           >
-            <div className="glass-strong relative overflow-hidden rounded-2xl p-8 animate-pulse-glow">
+            <div
+              onMouseEnter={startHover}
+              onMouseLeave={endHover}
+              onTouchStart={startHover}
+              onTouchEnd={endHover}
+              className="glass-strong relative overflow-hidden rounded-2xl p-8 animate-pulse-glow"
+            >
               <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-crimson/20 blur-3xl" />
               <div className="relative flex flex-col items-center text-center">
                 <LogoMark size={88} />
@@ -86,8 +92,34 @@ export function WhoAmI() {
                   <span className="text-foreground">full-stack engineering</span>{" "}
                   — driven by discipline, vision, and a long-game mindset.
                 </p>
+                <div className="mt-4 font-mono text-[0.6rem] tracking-[0.25em] text-muted-foreground/60">
+                  hover 5s · reveal next mission
+                </div>
               </div>
+
+              <AnimatePresence>
+                {revealed && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 12 }}
+                    className="mt-6 rounded-xl border border-crimson/40 bg-background/40 p-4 text-left"
+                    style={{ boxShadow: "0 0 30px oklch(0.58 0.24 25 / 0.25)" }}
+                  >
+                    <div className="font-display text-[0.6rem] tracking-[0.4em] text-crimson">
+                      // NEXT MISSION
+                    </div>
+                    <ul className="mt-2 space-y-1.5 text-xs leading-relaxed text-foreground">
+                      <li>→ Master production-grade ML systems</li>
+                      <li>→ Ship a flagship AI product</li>
+                      <li>→ Build a founding team & first startup</li>
+                      <li>→ Scale toward a generational tech legacy</li>
+                    </ul>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
+
           </motion.div>
 
           <div className="grid gap-3 md:col-span-3 md:grid-cols-2">
