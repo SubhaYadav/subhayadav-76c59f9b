@@ -9,12 +9,13 @@ const HELP = [
   "  help       — list commands",
   "  projects   — open creations archive",
   "  skills     — display arsenal",
-  "  resume     — download resume",
+  "  resume     — view resume",
   "  contact    — get in touch",
   "  social     — list social links",
-  "  unlock     — ??? ",
+  "  focus      — enter focus mode",
+  "  vision     — reveal future roadmap",
+  "  unlock     — ???",
   "  lock       — restore normal mode",
-  "  resume     — view resume",
   "  clear      — clear terminal",
   "  whoami     — identify the operator",
 ];
@@ -23,10 +24,9 @@ const RESPONSES: Record<string, string[]> = {
   help: HELP,
   projects: [
     "> Opening Projects Archive...",
-    "  [01] Silent Signal     — encrypted comms",
-    "  [02] KisanConnect      — AI for farmers",
-    "  [03] AI Evaluation     — automated grading",
-    "  [04] LandNest          — real estate, reimagined",
+    "  [01] Kissan Connect    — AI for farmers",
+    "  [02] Silent Signal     — emergency SOS network",
+    "  [03] Land Nest         — real estate, reimagined",
     "Navigate: → #creations",
   ],
   skills: [
@@ -34,7 +34,6 @@ const RESPONSES: Record<string, string[]> = {
     "  React · Tailwind · JS · HTML · CSS",
     "  Python · AI/ML · SQL · Firebase · GitHub",
   ],
-  resume: ["> Initiating download: resume.pdf"],
   contact: [
     "> Channels open:",
     `  email     ${LINKS.email}`,
@@ -54,6 +53,7 @@ const RESPONSES: Record<string, string[]> = {
     "  Mode: Executing.",
   ],
 };
+
 
 export function Terminal() {
   const [lines, setLines] = useState<Line[]>([
@@ -78,12 +78,6 @@ export function Terminal() {
       return;
     }
     if (cmd === "resume") {
-      const a = document.createElement("a");
-      a.href = "/resume.pdf";
-      a.download = "resume.pdf";
-      a.click();
-    }
-    if (cmd === "resume") {
       window.dispatchEvent(new CustomEvent("sssy:open-resume"));
       setLines([...next, { kind: "out", text: "> opening resume.png ..." }]);
       return;
@@ -104,6 +98,35 @@ export function Terminal() {
       ]);
       return;
     }
+    if (cmd === "focus") {
+      window.dispatchEvent(new CustomEvent("sssy:focus"));
+      setLines([
+        ...next,
+        { kind: "out", text: "> ✦ FOCUS MODE engaged. distractions muted. type `lock` to exit." },
+      ]);
+      return;
+    }
+    if (cmd === "vision") {
+      window.dispatchEvent(new CustomEvent("sssy:vision"));
+      setLines([
+        ...next,
+        { kind: "out", text: "> projecting future timeline ..." },
+        { kind: "out", text: "  2024 — BCA · foundations · AI/ML deep-dive" },
+        { kind: "out", text: "  2026 — full-stack shipping · ML systems in production" },
+        { kind: "out", text: "  2028 — first startup · AI products at scale" },
+        { kind: "out", text: "  2030+ — building a legacy in intelligent systems" },
+      ]);
+      return;
+    }
+    if (cmd === "sssy") {
+      window.dispatchEvent(new CustomEvent("sssy:brand"));
+      setLines([
+        ...next,
+        { kind: "out", text: "> ✦ PERSONAL BRAND MODE engaged." },
+      ]);
+      return;
+    }
+
     const out = RESPONSES[cmd] ?? [`command not found: ${cmd}. type 'help'.`];
     setLines([...next, ...out.map((t) => ({ kind: "out" as const, text: t }))]);
   };

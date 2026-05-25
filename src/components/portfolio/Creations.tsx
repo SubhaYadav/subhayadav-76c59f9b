@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { SectionHeader } from "./SectionHeader";
+import kisanImg from "@/assets/proj-kisan.jpg";
+import signalImg from "@/assets/proj-signal.jpg";
+import landnestImg from "@/assets/proj-landnest.jpg";
 
 type Project = {
   title: string;
@@ -13,37 +16,20 @@ type Project = {
   highlights: string[];
   future: string;
   gradient: string;
+  image: string;
 };
+
 
 const PROJECTS: Project[] = [
   {
-    title: "Silent Signal",
-    tagline: "Encrypted real-time communication",
-    description:
-      "A privacy-first messaging layer designed for environments where silence is louder than words.",
-    longDescription:
-      "Silent Signal is an end-to-end encrypted messaging system built around minimal metadata exposure. It handles real-time delivery, presence, and ephemeral messages with a focus on user sovereignty.",
-    tech: ["React", "Firebase", "Node", "WebCrypto"],
-    github: "https://github.com",
-    demo: "#",
-    highlights: [
-      "Zero-knowledge architecture",
-      "Real-time message delivery under 60ms",
-      "Ephemeral messages with auto-shred",
-    ],
-    future: "Add P2P fallback and on-device LLM moderation.",
-    gradient: "from-crimson/40 via-crimson/10 to-transparent",
-  },
-  {
-    title: "KisanConnect",
+    title: "Kissan Connect",
     tagline: "AI-powered platform for farmers",
     description:
       "Connecting farmers directly with markets, weather intelligence, and crop advisory powered by AI.",
     longDescription:
-      "KisanConnect removes middlemen from the agriculture supply chain. Farmers list produce, get AI-driven pricing recommendations, and receive weather + soil advisory in their local language.",
+      "Kissan Connect removes middlemen from the agriculture supply chain. Farmers list produce, get AI-driven pricing recommendations, and receive weather + soil advisory in their local language.",
     tech: ["React", "Python", "ML", "Firebase"],
-    github: "https://github.com",
-    demo: "#",
+    github: "https://github.com/SubhaYadav",
     highlights: [
       "Local-language voice interface",
       "ML-based crop price prediction",
@@ -51,35 +37,35 @@ const PROJECTS: Project[] = [
     ],
     future: "Integrate satellite-driven yield forecasting.",
     gradient: "from-emerald-500/30 via-crimson/10 to-transparent",
+    image: kisanImg,
   },
   {
-    title: "AI Evaluation System",
-    tagline: "Automated answer-script grading",
+    title: "Silent Signal",
+    tagline: "Emergency protection & SOS network",
     description:
-      "An intelligent evaluation engine that grades subjective answers with reasoning transparency.",
+      "A futuristic emergency protection system — live tracking, encrypted SOS, and rapid response workflow.",
     longDescription:
-      "A semantic grading system that compares student responses against rubrics using embeddings and LLM reasoning. Built for institutions that want auditable AI-assisted grading.",
-    tech: ["Python", "LLM", "FastAPI", "React"],
-    github: "https://github.com",
-    demo: "#",
+      "Silent Signal is a personal safety platform with live GPS tracking, panic-button emergency dispatch, encrypted contact alerts, and a real-time response timeline. Built for environments where seconds matter.",
+    tech: ["React", "Firebase", "Node", "WebCrypto"],
+    github: "https://github.com/SubhaYadav",
     highlights: [
-      "Rubric-based semantic grading",
-      "Explainable scoring for every answer",
-      "Bulk OCR + evaluation pipeline",
+      "One-tap SOS with live location streaming",
+      "Encrypted contact alert pipeline",
+      "Real-time emergency response timeline",
     ],
-    future: "Multi-modal grading: diagrams, code, math.",
-    gradient: "from-violet-500/30 via-crimson/10 to-transparent",
+    future: "Add wearable triggers and on-device threat detection.",
+    gradient: "from-crimson/40 via-crimson/10 to-transparent",
+    image: signalImg,
   },
   {
-    title: "LandNest",
-    tagline: "Real estate, reimagined",
+    title: "Land Nest",
+    tagline: "Smart real-estate marketplace",
     description:
       "A modern, transparent real-estate discovery experience with verified listings and smart filters.",
     longDescription:
-      "LandNest brings cinematic listing pages, verified land records, and personalised discovery to a market that desperately needs trust and clarity.",
+      "Land Nest brings cinematic listing pages, verified land records, an interactive map, and personalised discovery to a market that desperately needs trust and clarity.",
     tech: ["React", "Tailwind", "SQL", "Firebase"],
-    github: "https://github.com",
-    demo: "#",
+    github: "https://github.com/SubhaYadav",
     highlights: [
       "Verified ownership records",
       "Map-first discovery",
@@ -87,8 +73,10 @@ const PROJECTS: Project[] = [
     ],
     future: "Add AR walk-throughs and on-chain title proofs.",
     gradient: "from-sky-500/30 via-crimson/10 to-transparent",
+    image: landnestImg,
   },
 ];
+
 
 function Card({ p, onOpen, i }: { p: Project; onOpen: () => void; i: number }) {
   return (
@@ -100,22 +88,30 @@ function Card({ p, onOpen, i }: { p: Project; onOpen: () => void; i: number }) {
       className="group glass relative overflow-hidden rounded-2xl transition-all hover:border-crimson/60"
     >
       <div className={`relative aspect-[16/9] overflow-hidden bg-gradient-to-br ${p.gradient}`}>
-        <div className="absolute inset-0 grid-bg opacity-40" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="font-display text-6xl font-black tracking-tight text-foreground/5 md:text-8xl">
-            {String(i + 1).padStart(2, "0")}
-          </div>
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+        <img
+          src={p.image}
+          alt={`${p.title} preview`}
+          loading="lazy"
+          width={1280}
+          height={720}
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110"
+        />
+        <div className="pointer-events-none absolute inset-0 grid-bg opacity-20 mix-blend-overlay" />
+        <div
+          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          style={{ boxShadow: "inset 0 0 80px var(--crimson-glow)" }}
+        />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
         <div className="absolute bottom-4 left-5 right-5">
           <div className="font-display text-[0.6rem] tracking-[0.3em] text-crimson">
             PROJECT // {String(i + 1).padStart(2, "0")}
           </div>
-          <h3 className="mt-1 font-display text-2xl font-bold text-foreground md:text-3xl">
+          <h3 className="mt-1 font-display text-2xl font-bold text-foreground text-glow-soft md:text-3xl">
             {p.title}
           </h3>
         </div>
       </div>
+
       <div className="p-6">
         <p className="text-sm text-muted-foreground md:text-base">{p.description}</p>
         <div className="mt-4 flex flex-wrap gap-1.5">
@@ -203,16 +199,22 @@ export function Creations() {
                 ✕
               </button>
               <div className={`relative aspect-[16/8] overflow-hidden bg-gradient-to-br ${open.gradient}`}>
-                <div className="absolute inset-0 grid-bg opacity-50" />
+                <img
+                  src={open.image}
+                  alt={`${open.title} preview`}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">
                   <div className="font-display text-[0.6rem] tracking-[0.3em] text-crimson">
                     {open.tagline.toUpperCase()}
                   </div>
-                  <h3 className="mt-2 font-display text-4xl font-black text-foreground md:text-5xl">
+                  <h3 className="mt-2 font-display text-4xl font-black text-foreground text-glow md:text-5xl">
                     {open.title}
                   </h3>
                 </div>
               </div>
+
               <div className="space-y-6 p-7 md:p-9">
                 <p className="text-base leading-relaxed text-muted-foreground md:text-lg">
                   {open.longDescription}
