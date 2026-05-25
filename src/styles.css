@@ -195,3 +195,36 @@
     animation: var(--animate-shimmer);
   }
 }
+
+/* ============= Easter-egg modes ============= */
+html.legacy-mode {
+  --crimson: oklch(0.62 0.28 22);
+  --crimson-glow: oklch(0.78 0.3 22);
+}
+html.legacy-mode body { background: #050307; }
+html.legacy-mode main { animation: pulse-glow 3s ease-in-out infinite; }
+
+html.brand-mode { --crimson: oklch(0.66 0.27 18); --crimson-glow: oklch(0.82 0.28 18); }
+html.brand-mode section { box-shadow: inset 0 0 120px oklch(0.58 0.24 25 / 0.12); }
+
+html.founder-mode body::before {
+  content: "";
+  position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 30%, oklch(0.58 0.24 25 / 0.18), transparent 50%),
+    radial-gradient(circle at 80% 70%, oklch(0.58 0.24 25 / 0.14), transparent 50%);
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+
+html.focus-mode #whoami,
+html.focus-mode #arsenal,
+html.focus-mode #proof,
+html.focus-mode #evolution,
+html.focus-mode #stats,
+html.focus-mode #principles,
+html.focus-mode #guestbook,
+html.focus-mode #contact { display: none !important; }
+
+html.midnight-mode { --crimson: oklch(0.5 0.22 22); --crimson-glow: oklch(0.65 0.24 22); }
+html.midnight-mode body { background: #030206; }
+html.midnight-mode * { animation-duration: 1.4s; }
