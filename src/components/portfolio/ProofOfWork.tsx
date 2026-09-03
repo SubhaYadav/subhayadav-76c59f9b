@@ -223,17 +223,16 @@ export function ProofOfWork() {
               </button>
               <div className="relative aspect-[16/10] overflow-hidden">
                 <CertThumb c={open} fit="contain" />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 p-6 md:p-10">
-                  <div className="font-display text-[0.6rem] tracking-[0.4em] text-crimson">
-                    // VERIFIED CERTIFICATION
-                  </div>
-                  <div className="mt-3 font-display text-2xl font-black text-foreground md:text-4xl">
-                    {open.title}
-                  </div>
-                  <div className="mt-2 text-sm text-muted-foreground md:text-base">
-                    Issued by {open.issuer} · {open.date}
-                  </div>
+              </div>
+              <div className="border-t border-border/60 px-6 pt-5 md:px-10">
+                <div className="font-display text-[0.6rem] tracking-[0.4em] text-crimson">
+                  // VERIFIED CERTIFICATION
+                </div>
+                <div className="mt-2 font-display text-xl font-black text-foreground md:text-3xl">
+                  {open.title}
+                </div>
+                <div className="mt-1 text-sm text-muted-foreground md:text-base">
+                  Issued by {open.issuer} · {open.date}
                 </div>
               </div>
               <div className="flex flex-wrap items-center justify-between gap-3 p-5">
