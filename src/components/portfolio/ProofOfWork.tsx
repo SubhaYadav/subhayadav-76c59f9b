@@ -100,15 +100,20 @@ const CERTS: Cert[] = [
   },
 ];
 
-function CertThumb({ c }: { c: Cert }) {
+function CertThumb({ c, fit = "cover" }: { c: Cert; fit?: "cover" | "contain" }) {
   if (c.image) {
     return (
-      <img
-        src={c.image}
-        alt={c.title}
-        className="absolute inset-0 h-full w-full object-cover"
-        loading="lazy"
-      />
+      <>
+        {fit === "contain" && (
+          <div className="absolute inset-0 bg-gradient-to-br from-crimson/20 via-background to-background" />
+        )}
+        <img
+          src={c.image}
+          alt={`${c.title} certificate issued by ${c.issuer}`}
+          className={`absolute inset-0 h-full w-full ${fit === "contain" ? "object-contain" : "object-cover object-top"}`}
+          loading="lazy"
+        />
+      </>
     );
   }
   return (
