@@ -1,75 +1,100 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { SectionHeader } from "./SectionHeader";
+import certGoogleAI from "@/assets/certs/google_ai_professional_certificate.png.asset.json";
+import certInfoSec from "@/assets/certs/information_security.png.asset.json";
+import certQgis from "@/assets/certs/technicial_tutriol_-qgis.png.asset.json";
+import certEduData from "@/assets/certs/education_sector_analysis_and_data_literacy.png.asset.json";
+import certDisability from "@/assets/certs/disability_orientation.png.asset.json";
+import certChildProtection from "@/assets/certs/introduction_to_child_protection.png.asset.json";
+import certExcel from "@/assets/certs/techinical_tutrioal-basic_excel.png.asset.json";
+import certPython from "@/assets/certs/basic_of_python_programming.png.asset.json";
+import certDigitalMarketing from "@/assets/certs/the_fundamental_of_digital_marketing.png.asset.json";
 
 /**
- * To add a real certificate later, just append to this list.
- * Replace `image` with an actual image URL when available;
- * if `image` is undefined, a styled futuristic thumbnail is auto-generated.
+ * CERTIFICATE DATA — single source of truth.
+ * To add a certificate: upload the image to src/assets/certs, import it above,
+ * and append an entry here. To remove one: delete its entry. No UI code changes needed.
  */
 export type Cert = {
   title: string;
   issuer: string;
-  date: string; // human-readable, e.g. "July 2024"
+  date: string; // human-readable, e.g. "7 July 2024"
   image?: string;
-  accent: string; // tailwind gradient classes for the auto-thumbnail
-  glyph: string; // short symbol shown on the thumbnail
+  accent: string; // tailwind gradient classes for the fallback thumbnail
+  glyph: string; // short symbol shown on the fallback thumbnail
 };
 
 const CERTS: Cert[] = [
   {
+    title: "Google AI Professional Certificate",
+    issuer: "Google · Coursera",
+    date: "19 June 2026",
+    image: certGoogleAI.url,
+    accent: "from-blue-500/40 via-red-500/20 to-background",
+    glyph: "G",
+  },
+  {
     title: "Information Security",
-    issuer: "The Open University",
-    date: "July 2024",
+    issuer: "The Open University (OpenLearn)",
+    date: "7 July 2024",
+    image: certInfoSec.url,
     accent: "from-crimson/50 via-rose-500/20 to-background",
     glyph: "🛡",
   },
   {
     title: "Technical Tutorial — QGIS",
-    issuer: "UNICEF",
-    date: "December 2022",
+    issuer: "Global Nutrition Cluster & UNICEF",
+    date: "5 December 2022",
+    image: certQgis.url,
     accent: "from-sky-500/40 via-cyan-500/20 to-background",
     glyph: "◐",
   },
   {
     title: "Education Sector Analysis & Data Literacy",
     issuer: "UNICEF",
-    date: "December 2022",
+    date: "7 December 2022",
+    image: certEduData.url,
     accent: "from-emerald-500/40 via-teal-500/20 to-background",
     glyph: "∑",
   },
   {
     title: "Disability Orientation",
     issuer: "UNICEF",
-    date: "December 2022",
+    date: "6 December 2022",
+    image: certDisability.url,
     accent: "from-violet-500/40 via-indigo-500/20 to-background",
     glyph: "♿",
   },
   {
     title: "Introduction to Child Protection",
     issuer: "UNICEF",
-    date: "December 2022",
+    date: "6 December 2022",
+    image: certChildProtection.url,
     accent: "from-amber-500/40 via-orange-500/20 to-background",
     glyph: "✦",
   },
   {
     title: "Technical Tutorial — Basic Excel",
-    issuer: "UNICEF",
-    date: "May 2022",
+    issuer: "Global Nutrition Cluster & UNICEF",
+    date: "5 December 2022",
+    image: certExcel.url,
     accent: "from-emerald-600/40 via-lime-500/20 to-background",
     glyph: "≡",
   },
   {
     title: "Basics of Python Programming",
-    issuer: "Open Weaver",
-    date: "October 2023",
+    issuer: "OpenWeaver",
+    date: "10 May 2023",
+    image: certPython.url,
     accent: "from-yellow-500/40 via-blue-500/20 to-background",
     glyph: "{ }",
   },
   {
     title: "The Fundamentals of Digital Marketing",
-    issuer: "Google",
-    date: "December 2022",
+    issuer: "Google Digital Garage",
+    date: "4 December 2022",
+    image: certDigitalMarketing.url,
     accent: "from-blue-500/40 via-red-500/20 to-background",
     glyph: "◎",
   },
