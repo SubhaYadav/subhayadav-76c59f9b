@@ -221,8 +221,8 @@ export function ProofOfWork() {
                 ✕
               </button>
               <div className="relative aspect-[16/10] overflow-hidden">
-                <CertThumb c={open} />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+                <CertThumb c={open} fit="contain" />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-6 md:p-10">
                   <div className="font-display text-[0.6rem] tracking-[0.4em] text-crimson">
                     // VERIFIED CERTIFICATION
@@ -247,7 +247,10 @@ export function ProofOfWork() {
                     CLOSE
                   </button>
                   <a
-                    href="#"
+                    href={open.image ?? "#"}
+                    download
+                    target="_blank"
+                    rel="noreferrer"
                     className="rounded-full bg-crimson px-5 py-2 font-display text-[0.65rem] font-semibold tracking-[0.2em] text-primary-foreground transition-all hover:bg-crimson-glow"
                     style={{ boxShadow: "0 0 24px oklch(0.58 0.24 25 / 0.5)" }}
                   >
