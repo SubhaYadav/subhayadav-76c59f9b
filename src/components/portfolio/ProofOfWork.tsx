@@ -154,6 +154,7 @@ function Card({ c, onOpen }: { c: Cert; onOpen: () => void }) {
     >
       <div className="relative h-36 w-full overflow-hidden md:h-40">
         <CertThumb c={c} />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-background to-transparent" />
         <div className="absolute right-3 top-3 rounded-full border border-crimson/40 bg-background/70 px-2 py-0.5 font-display text-[0.55rem] tracking-[0.3em] text-crimson backdrop-blur-md">
           {c.date.split(" ").pop()}
         </div>
